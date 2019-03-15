@@ -21,6 +21,8 @@ class ascore(object):
 		yScore = dAnswer.loc[:, ['Score']]
 		return xAnswer, xQuestion, xTAnswer, yScore
 
+	
+
 P = ascore(answer='DataAnswerExam_SMP.csv', question='DataQuestionExam_SMP.csv')
 a, b, c, d = P.splitIO()
 print(len(d))		
