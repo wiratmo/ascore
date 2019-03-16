@@ -28,30 +28,26 @@ class ascore(object):
 		return xAnswer, xQuestion, xTAnswer, yScore
 
 	def separateWords(self, words):
-		# locWord = ''
 
 		for word in words:
 			
 			mergedWord = list()
 
-			alphabet = self.re.sub("[^a-zA-Z]", " ", word).replace(' ','')
-			number = self.re.sub("[^0-9]", " ", word).replace(' ','')
-			symbol = self.re.sub('[^/%/*()\-=+.,><":]', " ", word).replace(' ','')
-			
+			alphabet = (self.re.sub("[^a-zA-Z]", " ", word)).split()
+			number = (self.re.sub("[^0-9]", " ", word)).split()
+			symbol = (self.re.sub('[^/%/*()\-=+.,><":]', " ", word)).split()
+
 
 			# y = A'B'C + A'BC' + AB'C'
 			if (((not(not alphabet)) and (not(not number)) and (not symbol)) or ((not(not alphabet)) and (not number) and (not(not symbol))) or ((not alphabet) and (not(not number)) and (not(not symbol)))):
-				print(word)
+
 				locWord = words.index(word)
 				dtype = [('loc', int), ('value', 'U20')]
-				
-				# looping terus karena word e sing pertama nda iso ganti.
-				if not(not alphabet):
-					mergedWord.append((word.index(alphabet), alphabet))
-				if not(not number):
-					mergedWord.append((word.index(number), number))
-				if not(not symbol):
-					mergedWord.append((word.index(symbol), symbol))
+
+				[mergedWord.append((word.index(alpa), alpa)) for alpa in alphabet if not(not(alphabet))]
+				[mergedWord.append((word.index(num), num)) for num in number if not(not(number))]
+				[mergedWord.append((word.index(sym), sym)) for sym in symbol if not(not(symbol))]
+
 
 				mergedWord = self.np.array(mergedWord, dtype=dtype)
 				mergedWord = self.np.sort(mergedWord, order='loc')
@@ -59,28 +55,27 @@ class ascore(object):
 				a = locWord
 					
 				for mw in mergedWord:
+
 					if a == locWord:
 						words[a] = mw[1]
-						a += 1
 					else:
 						words.insert(a, mw[1])
+	
+					a += 1
 
 		return words
 
 	def sentenceToWordList(self, sentences):
 
-		essay_v = self.re.sub("[^a-zA-Z0-9/%/*\-=+.,><':]", " ", sentences)
+		essay_v = self.re.sub("[^a-zA-Z0-9/%/*\-=+.,><'():]", " ", sentences)
 		words = essay_v.split()
 		return self.separateWords(words)
 
 
-P = ascore(answer='SimpleData.csv', question='DataQuestionExam_SMP.csv')
+P = ascore(answer='DataAnswerExam_SMP.csv', question='DataQuestionExam_SMP.csv')
 a, b, c, d = P.splitIO()
 
 sentences = []
 for a1 in a.loc[:,['Answer']].values:
 	sentences.append(P.sentenceToWordList(a1[-1]))
 print((sentences))
-
-# no3 = (c.loc[:,['Answer']].values)[2]
-# print(P.sentenceToWordList(no3[-1]))
