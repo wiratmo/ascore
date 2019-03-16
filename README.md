@@ -1,4 +1,4 @@
 # ascore 
-automatic essay scoring(bahasa indonesia)
+Automatic Essay Scoring(bahasa indonesia)
 
-data diperoleh dari hasil ujain Peniaian Akhir Semester ganjil 2018/2019 dan Penilaian Tengah Semester genap 2018/ 2019
+Data diperoleh dari hasil `Penilaian Akhir Semester ganjil 2018/2019` dan `Penilaian Tengah Semester genap 2018/ 2019` Salah satu SMP Swasta di Surakarta.
