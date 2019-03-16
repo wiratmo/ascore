@@ -3,13 +3,11 @@ class ascore(object):
 	# import package
 	import pandas as pd
 	import numpy as np
+	import string
 	import re
 	from gensim.models import Word2Vec
 
 	gWord = []
-
-	def test(self):
-		print("test")
 
 	def __init__(self, answer, question):
 		super(ascore, self).__init__()
@@ -29,96 +27,60 @@ class ascore(object):
 		yScore = dAnswer.loc[:, ['Score']]
 		return xAnswer, xQuestion, xTAnswer, yScore
 
-	def pushWord(self, word):
-		gWord = word;
-		self.gWord = []
-		return gWord
+	def separateWords(self, words):
+		# locWord = ''
 
-	def mergedWord(self, sentences):
-		word = self.re.sub("[^a-zA-Z]", " ", sentences).replace(' ','')
-		number = self.re.sub("[^0-9]", " ", sentences).replace(' ','')
-		char = self.re.sub('[^/%/*()\-=+.,><":]', " ", sentences).replace(' ','')
+		for word in words:
+			
+			mergedWord = list()
 
-		if ((word == sentences) or (number == sentences) or (char == sentences)):
-			if len(self.gWord)>0:
-				self.gWord.append(sentences)
-				return self.pushWord(self.gWord)
-			return sentences
-		else:
-			# check dulu ada ga nya, kaau ada baru dibandingkan
-			w = sentences.find(word)
-			n = sentences.find(number)
-			c = sentences.find(char)
+			alphabet = self.re.sub("[^a-zA-Z]", " ", word).replace(' ','')
+			number = self.re.sub("[^0-9]", " ", word).replace(' ','')
+			symbol = self.re.sub('[^/%/*()\-=+.,><":]', " ", word).replace(' ','')
+			
 
-			if(not(not word)):
-				if (not(not number)):
-					if (not(not char)):
-						if ((w < c) and (w < n)):
-							self.gWord.append(word)
-							sentences = sentences.replace(word, '')
-							return self.mergedWord(sentences)
-						elif ((n < c) and (n < w)) :
-							self.gWord.append(number)
-							sentences = sentences.replace(number, '')
-							return self.mergedWord(sentences)
-						elif ((c < w) and (c <n)) :
-							self.gWord.append(char)
-							sentences = sentences.replace(char, '')
-							return self.mergedWord(sentences)
-					else:
-						if (w < n):
-							self.gWord.append(word)
-							sentences = sentences.replace(word, '')
-							return self.mergedWord(sentences)
-						elif (n < w) :
-							self.gWord.append(number)
-							sentences = sentences.replace(number, '')
-							return self.mergedWord(sentences)
-				else :
-					if (not(not char)):
-						if (w < c):
-							self.gWord.append(word)
-							sentences = sentences.replace(word, '')
-							return self.mergedWord(sentences)
-						elif (c < w) :
-							self.gWord.append(char)
-							sentences = sentences.replace(char, '')
-							return self.mergedWord(sentences)
-					else:
-						return w
-
-			elif (not(not number)):
-				if (not(not char)):
-					if (n < c) :
-						self.gWord.append(number)
-						sentences = sentences.replace(number, '')
-						return self.mergedWord(sentences)
-					elif (c < n) :
-						self.gWord.append(char)
-						sentences = sentences.replace(char, '')
-						return self.mergedWord(sentences)
-				else:
-					return n
-			elif (not(not char)):
-				return c
+			# y = A'B'C + A'BC' + AB'C'
+			if (((not(not alphabet)) and (not(not number)) and (not symbol)) or ((not(not alphabet)) and (not number) and (not(not symbol))) or ((not alphabet) and (not(not number)) and (not(not symbol)))):
+				print(word)
+				locWord = words.index(word)
+				dtype = [('loc', int), ('value', 'U20')]
 				
+				# looping terus karena word e sing pertama nda iso ganti.
+				if not(not alphabet):
+					mergedWord.append((word.index(alphabet), alphabet))
+				if not(not number):
+					mergedWord.append((word.index(number), number))
+				if not(not symbol):
+					mergedWord.append((word.index(symbol), symbol))
 
-	def essayToWordList(self, sentences):
-		sentences = self.re.split("\s", sentences)
-		words = [self.mergedWord(w) for w in sentences]
-		return (words)
+				mergedWord = self.np.array(mergedWord, dtype=dtype)
+				mergedWord = self.np.sort(mergedWord, order='loc')
+
+				a = locWord
+					
+				for mw in mergedWord:
+					if a == locWord:
+						words[a] = mw[1]
+						a += 1
+					else:
+						words.insert(a, mw[1])
+
+		return words
+
+	def sentenceToWordList(self, sentences):
+
+		essay_v = self.re.sub("[^a-zA-Z0-9/%/*\-=+.,><':]", " ", sentences)
+		words = essay_v.split()
+		return self.separateWords(words)
 
 
-P = ascore(answer='DataAnswerExam_SMP.csv', question='DataQuestionExam_SMP.csv')
+P = ascore(answer='SimpleData.csv', question='DataQuestionExam_SMP.csv')
 a, b, c, d = P.splitIO()
 
-#  disable sementara untuk mempersingkat waktu
+sentences = []
+for a1 in a.loc[:,['Answer']].values:
+	sentences.append(P.sentenceToWordList(a1[-1]))
+print((sentences))
 
-# sentences = []
-# for a1 in a.loc[:,['Answer']].values:
-# 	sentences.append(P.essayToWordList(a1[-1]))
-# print(sentences[350])
-
-no3 = (c.loc[:, ['Answer']].values)[2]
-# # print(no3)
-print(P.essayToWordList(no3[-1]))
+# no3 = (c.loc[:,['Answer']].values)[2]
+# print(P.sentenceToWordList(no3[-1]))
