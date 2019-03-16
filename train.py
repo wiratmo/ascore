@@ -7,7 +7,10 @@ class ascore(object):
 	from gensim.models import Word2Vec
 
 	gWord = []
-	
+
+	def test(self):
+		print("test")
+
 	def __init__(self, answer, question):
 		super(ascore, self).__init__()
 		self.answer = answer
@@ -26,44 +29,79 @@ class ascore(object):
 		yScore = dAnswer.loc[:, ['Score']]
 		return xAnswer, xQuestion, xTAnswer, yScore
 
+	def pushWord(self, word):
+		gWord = word;
+		self.gWord = []
+		return gWord
+
 	def mergedWord(self, sentences):
 		word = self.re.sub("[^a-zA-Z]", " ", sentences).replace(' ','')
 		number = self.re.sub("[^0-9]", " ", sentences).replace(' ','')
 		char = self.re.sub('[^/%/*()\-=+.,><":]', " ", sentences).replace(' ','')
 
-		print("--------")
-		print("ini word ..."+word)
-		print("ini number ..."+number)
-		print("ini char ..."+char)
-
 		if ((word == sentences) or (number == sentences) or (char == sentences)):
 			if len(self.gWord)>0:
 				self.gWord.append(sentences)
-				print(self.gWord)
-				return self.gWord
+				return self.pushWord(self.gWord)
 			return sentences
 		else:
 			# check dulu ada ga nya, kaau ada baru dibandingkan
-			
 			w = sentences.find(word)
 			n = sentences.find(number)
 			c = sentences.find(char)
-			print(w)
-			print(n)
-			print(c)
-			if ((w < c) and (w <n)):
-				self.gWord.append(w)
-				sentences = sentences.replace(w, '')
-				return mergedWord()
-			elif ((n < c) and (n < w)) :
-				self.gWord.append(c)
-				sentences = sentences.replace(n, '')
-				return mergedWord()
-			elif ((c < w) and (c <n)) :
-				self.gWord.append(c)
-				sentences = sentences.replace(c, '')
-				return mergedWord()
-		pass
+
+			if(not(not word)):
+				if (not(not number)):
+					if (not(not char)):
+						if ((w < c) and (w < n)):
+							self.gWord.append(word)
+							sentences = sentences.replace(word, '')
+							return self.mergedWord(sentences)
+						elif ((n < c) and (n < w)) :
+							self.gWord.append(number)
+							sentences = sentences.replace(number, '')
+							return self.mergedWord(sentences)
+						elif ((c < w) and (c <n)) :
+							self.gWord.append(char)
+							sentences = sentences.replace(char, '')
+							return self.mergedWord(sentences)
+					else:
+						if (w < n):
+							self.gWord.append(word)
+							sentences = sentences.replace(word, '')
+							return self.mergedWord(sentences)
+						elif (n < w) :
+							self.gWord.append(number)
+							sentences = sentences.replace(number, '')
+							return self.mergedWord(sentences)
+				else :
+					if (not(not char)):
+						if (w < c):
+							self.gWord.append(word)
+							sentences = sentences.replace(word, '')
+							return self.mergedWord(sentences)
+						elif (c < w) :
+							self.gWord.append(char)
+							sentences = sentences.replace(char, '')
+							return self.mergedWord(sentences)
+					else:
+						return w
+
+			elif (not(not number)):
+				if (not(not char)):
+					if (n < c) :
+						self.gWord.append(number)
+						sentences = sentences.replace(number, '')
+						return self.mergedWord(sentences)
+					elif (c < n) :
+						self.gWord.append(char)
+						sentences = sentences.replace(char, '')
+						return self.mergedWord(sentences)
+				else:
+					return n
+			elif (not(not char)):
+				return c
+				
 
 	def essayToWordList(self, sentences):
 		sentences = self.re.split("\s", sentences)
@@ -77,10 +115,10 @@ a, b, c, d = P.splitIO()
 #  disable sementara untuk mempersingkat waktu
 
 # sentences = []
-# for a1 in c.loc[:,['Answer']].values:
+# for a1 in a.loc[:,['Answer']].values:
 # 	sentences.append(P.essayToWordList(a1[-1]))
-# print(sentences[2])
+# print(sentences[350])
 
 no3 = (c.loc[:, ['Answer']].values)[2]
-print(no3)
+# # print(no3)
 print(P.essayToWordList(no3[-1]))

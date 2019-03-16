@@ -12,7 +12,7 @@ prediksi solusi :
 	- huruf
 	- angka
 	- karakter
-
+	240/ 120 x 60 = 120 kpm, jadi kecepatan dani membaca adalah 120 kpm
 
 ```
 # Check Data
