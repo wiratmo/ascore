@@ -27,26 +27,39 @@ class ascore(object):
 		return xAnswer, xQuestion, xTAnswer, yScore
 
 	def mergedWord(self, sentences):
-		word = self.re.sub("[^a-zA-Z]", " ", sentences)
-		# number = self.re.sub("[^1-9]", " ", sentences)
-		char = self.re.sub('[^/%/*()\-=+.,><":]', " ", sentences) # character re untuk caracter blm tahu
+		word = self.re.sub("[^a-zA-Z]", " ", sentences).replace(' ','')
+		number = self.re.sub("[^0-9]", " ", sentences).replace(' ','')
+		char = self.re.sub('[^/%/*()\-=+.,><":]', " ", sentences).replace(' ','')
 
-		# if ((words == sentences) or (number == sentences) or (char == sentences)):
-		if ((word == sentences)  or (char == sentences)):
+		print("--------")
+		print("ini word ..."+word)
+		print("ini number ..."+number)
+		print("ini char ..."+char)
+
+		if ((word == sentences) or (number == sentences) or (char == sentences)):
 			if len(self.gWord)>0:
 				self.gWord.append(sentences)
+				print(self.gWord)
 				return self.gWord
-			print(sentences)
 			return sentences
 		else:
+			# check dulu ada ga nya, kaau ada baru dibandingkan
+			
 			w = sentences.find(word)
-			# n = sentences.find(number)
+			n = sentences.find(number)
 			c = sentences.find(char)
-			if ((w < c)):
+			print(w)
+			print(n)
+			print(c)
+			if ((w < c) and (w <n)):
 				self.gWord.append(w)
 				sentences = sentences.replace(w, '')
 				return mergedWord()
-			elif c < w :
+			elif ((n < c) and (n < w)) :
+				self.gWord.append(c)
+				sentences = sentences.replace(n, '')
+				return mergedWord()
+			elif ((c < w) and (c <n)) :
 				self.gWord.append(c)
 				sentences = sentences.replace(c, '')
 				return mergedWord()
@@ -54,15 +67,20 @@ class ascore(object):
 
 	def essayToWordList(self, sentences):
 		sentences = self.re.split("\s", sentences)
-		print(sentences)
 		words = [self.mergedWord(w) for w in sentences]
 		return (words)
 
 
 P = ascore(answer='DataAnswerExam_SMP.csv', question='DataQuestionExam_SMP.csv')
 a, b, c, d = P.splitIO()
-sentences = []
-for a1 in c.loc[:,['Answer']].values:
-	sentences.append(P.essayToWordList(a1[-1]))
-print(sentences[2])
-print((c.loc[:, ['Answer']].values)[2])
+
+#  disable sementara untuk mempersingkat waktu
+
+# sentences = []
+# for a1 in c.loc[:,['Answer']].values:
+# 	sentences.append(P.essayToWordList(a1[-1]))
+# print(sentences[2])
+
+no3 = (c.loc[:, ['Answer']].values)[2]
+print(no3)
+print(P.essayToWordList(no3[-1]))
