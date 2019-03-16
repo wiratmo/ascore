@@ -3,10 +3,10 @@ class ascore(object):
 	# import package
 	import pandas as pd
 	import numpy as np
-	import nltk
 	import re
-	from nltk.corpus import stopwords
 	from gensim.models import Word2Vec
+
+	gWord = []
 	
 	def __init__(self, answer, question):
 		super(ascore, self).__init__()
@@ -27,25 +27,42 @@ class ascore(object):
 		return xAnswer, xQuestion, xTAnswer, yScore
 
 	def mergedWord(self, sentences):
-		word = self.re.sub("[^a-zA-Z]", "", sentences)
-		number = self.re.sub("[^1-9]", "", sentences)
-		char = self.re.sub("[^a-zA-Z]", "", sentences) # character re untuk caracter blm tahu
+		word = self.re.sub("[^a-zA-Z]", " ", sentences)
+		# number = self.re.sub("[^1-9]", " ", sentences)
+		char = self.re.sub('[^/%/*()\-=+.,><":]', " ", sentences) # character re untuk caracter blm tahu
 
-		if : # equal antar senternce dengan word DENGAN OPREATOR OR; jika hasilnya true maka diulangi lagi, kalau false baru keluar senterncenya
-			# dideteksi mana kata pertama; kalau kata pertama ditemukan simpan dulu ke variabel 
-			pass
+		# if ((words == sentences) or (number == sentences) or (char == sentences)):
+		if ((word == sentences)  or (char == sentences)):
+			if len(self.gWord)>0:
+				self.gWord.append(sentences)
+				return self.gWord
+			print(sentences)
+			return sentences
 		else:
-			pass
+			w = sentences.find(word)
+			# n = sentences.find(number)
+			c = sentences.find(char)
+			if ((w < c)):
+				self.gWord.append(w)
+				sentences = sentences.replace(w, '')
+				return mergedWord()
+			elif c < w :
+				self.gWord.append(c)
+				sentences = sentences.replace(c, '')
+				return mergedWord()
+		pass
 
 	def essayToWordList(self, sentences):
 		sentences = self.re.split("\s", sentences)
+		print(sentences)
 		words = [self.mergedWord(w) for w in sentences]
 		return (words)
+
 
 P = ascore(answer='DataAnswerExam_SMP.csv', question='DataQuestionExam_SMP.csv')
 a, b, c, d = P.splitIO()
 sentences = []
-for a1 in a.loc[:,['Answer']].values:
+for a1 in c.loc[:,['Answer']].values:
 	sentences.append(P.essayToWordList(a1[-1]))
-print(sentences[350])
-print(a.iloc[350].values)
+print(sentences[2])
+print((c.loc[:, ['Answer']].values)[2])

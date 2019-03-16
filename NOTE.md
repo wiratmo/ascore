@@ -12,4 +12,10 @@ prediksi solusi :
 	- huruf
 	- angka
 	- karakter
+
+
 ```
+# Check Data
+
+1416	4	omzet; hektar; saksama; salakan; sirop; zaman; apotek; modern; himbau; kuitansi
+312	3	240 kata/ 120 detik x 60 = 12 kpm	5
