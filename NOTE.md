@@ -14,7 +14,7 @@
 # embedding kata, angka dan symbol
 Dimodel yang kita buat, terkadang dalam satu kalimat jawaban mengandung kata berupa gabungan `huruf`, `angka`, ataupuun `simbol`. word2vec yang digunakan biasanya menggunakan hanya `huruf` saja mengacuhkan `angka` atau `simbol` 
 
-##solusi 
+## solusi 
 ```
 Lets consider both ways of representing numbers:
 
@@ -31,7 +31,6 @@ dalam kasus operator matematik `240/ 120 x 60 = 120` simbol `/` dan `=`
 
 **rencana pemecahan masalah**
 dimulai dari pemecahan angka menjadi kata, dan untuk simbol sementara diacuhkan dahulu.
-
 
 
 # stemming 

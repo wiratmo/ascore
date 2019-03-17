@@ -1,29 +1,8 @@
 class toWordList(object):
 
-	# import package
-	import pandas as pd
 	import numpy as np
 	import re
 	
-
-	def __init__(self, answer, question):
-		super(toWordList, self).__init__()
-		self.answer = answer
-		self.question = question
-
-	def openData(self):
-		dAnswer = self.pd.read_csv(self.answer).drop(columns=['Nama_Peserta']).sort_values(by=['Essay_id'])
-		dQuestion = self.pd.read_csv(self.question)
-		return dAnswer, dQuestion
-
-	def splitIO(self):
-		dAnswer, dQuestion = self.openData()
-		xAnswer = dAnswer.loc[:, ['Essay_id', 'Answer']]
-		xQuestion = dQuestion.loc[:, ['Question']]
-		xTAnswer = dQuestion.loc[:, ['Answer']]
-		yScore = dAnswer.loc[:, ['Score']]
-		return xAnswer, xQuestion, xTAnswer, yScore
-
 	def separateWords(self, words, changeNumber2Word):
 
 		for word in words:
@@ -88,7 +67,7 @@ class toWordList(object):
 					else:
 						words.insert(a, tsw)
 					a += 1
-					
+
 		return words
 
 	def sentenceToWordList(self, sentences, changeNumber2Word = False):
