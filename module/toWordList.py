@@ -1,4 +1,4 @@
-class toWordList():
+class toWordList(object):
 
 	# import package
 	import pandas as pd
@@ -24,9 +24,7 @@ class toWordList():
 		yScore = dAnswer.loc[:, ['Score']]
 		return xAnswer, xQuestion, xTAnswer, yScore
 
-	def separateWords(self, words, changeNumber2Word = False):
-
-		from num2words import num2words
+	def separateWords(self, words, changeNumber2Word):
 
 		for word in words:
 			
@@ -62,29 +60,39 @@ class toWordList():
 	
 					a += 1
 
-			# bagian ini masih ada yang error 
-			else:
-				if not(not(number)):
-
-					locWord = words.index(word)
-
-					num = int(number[-1])
-					toSingleWord = (str(num2words(num, lang='id'))).split()
-
-					a = locWord
-
-					for tsw in toSingleWord:
-
-						if a == locWord:
-							words[a] = tsw
-						else:
-							words.insert(a, tsw)
-						a += 1
+		if changeNumber2Word:
+			return self.changeNumber2Word(words)
 
 		return words
 
-	def sentenceToWordList(self, sentences):
+	def changeNumber2Word(self, words):
+
+		from num2words import num2words
+
+		for word in words:
+			number = (self.re.sub("[^0-9]", " ", word)).split()
+
+			if not(not(number)):
+
+				locWord = words.index(word)
+
+				num = int(number[-1])
+				toSingleWord = (str(num2words(num, lang='id'))).split()
+
+				a = locWord
+
+				for tsw in toSingleWord:
+
+					if a == locWord:
+						words[a] = tsw
+					else:
+						words.insert(a, tsw)
+					a += 1
+					
+		return words
+
+	def sentenceToWordList(self, sentences, changeNumber2Word = False):
 
 		essay_v = self.re.sub("[^a-zA-Z0-9/%/*\-=+.,><'():]", " ", sentences)
 		words = essay_v.split()
-		return self.separateWords(words)
+		return self.separateWords(words, changeNumber2Word)
