@@ -21,6 +21,7 @@ Lets consider both ways of representing numbers:
 1. Treating it as string and considering it as another word and assign an ID to it when forming a dictionary. Or
 2. Converting the numbers to actual words : '1' becomes 'one', '2' as 'two' and so on.
 ```
+[How to treat numbers inside text strings when vectorizing words?](https://stackoverflow.com/questions/44865840/how-to-treat-numbers-inside-text-strings-when-vectorizing-words)
 
 analisis 
 okelah kalau kita menggunakan cara ke dua untuk melakukan embedding. bisa menggunakan [num2words](https://github.com/savoirfairelinux/num2words) tetapi masalahnya adalah tanda baca, pertanyaannya adalah tanda baca apakah diperlukan untuk dilakukan embedding? 
@@ -32,7 +33,6 @@ dalam kasus operator matematik `240/ 120 x 60 = 120` simbol `/` dan `=`
 dimulai dari pemecahan angka menjadi kata, dan untuk simbol sementara diacuhkan dahulu.
 
 
-[How to treat numbers inside text strings when vectorizing words?](https://stackoverflow.com/questions/44865840/how-to-treat-numbers-inside-text-strings-when-vectorizing-words)
 
 # stemming 
 sementara belum mengetahui apa plus minus dari `stemming`

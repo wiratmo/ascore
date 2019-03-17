@@ -1,11 +1,10 @@
-class toWordList(object):
+class toWordList():
 
 	# import package
 	import pandas as pd
 	import numpy as np
-	import string
 	import re
-	from gensim.models import Word2Vec
+	from num2words import num2words
 
 	def __init__(self, answer, question):
 		super(toWordList, self).__init__()
@@ -25,7 +24,7 @@ class toWordList(object):
 		yScore = dAnswer.loc[:, ['Score']]
 		return xAnswer, xQuestion, xTAnswer, yScore
 
-	def separateWords(self, words):
+	def separateWords(self, words, changeNumber2Word = False):
 
 		for word in words:
 			
@@ -60,6 +59,11 @@ class toWordList(object):
 						words.insert(a, mw[1])
 	
 					a += 1
+
+			# bagian ini masih ada yang error 
+			# if not(not(number)):
+			# 	num = (number[-1])
+			# 	print(type(self.num2words(240, lang='id')))
 
 		return words
 
