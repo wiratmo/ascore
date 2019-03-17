@@ -4,7 +4,7 @@ class toWordList():
 	import pandas as pd
 	import numpy as np
 	import re
-	from num2words import num2words
+	
 
 	def __init__(self, answer, question):
 		super(toWordList, self).__init__()
@@ -25,6 +25,8 @@ class toWordList():
 		return xAnswer, xQuestion, xTAnswer, yScore
 
 	def separateWords(self, words, changeNumber2Word = False):
+
+		from num2words import num2words
 
 		for word in words:
 			
@@ -61,9 +63,23 @@ class toWordList():
 					a += 1
 
 			# bagian ini masih ada yang error 
-			# if not(not(number)):
-			# 	num = (number[-1])
-			# 	print(type(self.num2words(240, lang='id')))
+			else:
+				if not(not(number)):
+
+					locWord = words.index(word)
+
+					num = int(number[-1])
+					toSingleWord = (str(num2words(num, lang='id'))).split()
+
+					a = locWord
+
+					for tsw in toSingleWord:
+
+						if a == locWord:
+							words[a] = tsw
+						else:
+							words.insert(a, tsw)
+						a += 1
 
 		return words
 

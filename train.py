@@ -10,5 +10,3 @@ a, b, c, d = P.splitIO()
 # print((sentences))
 
 print(P.sentenceToWordList((c.loc[:,['Answer']].values)[2][-1]))
-
-print(num2words(240, lang='id'))
