@@ -1,6 +1,6 @@
 from module.toWordList import toWordList
 
-P = toWordList(answer='DataAnswerExam_SMP.csv', question='DataQuestionExam_SMP.csv')
+P = toWordList(answer='SimpleData.csv', question='DataQuestionExam_SMP.csv')
 a, b, c, d = P.splitIO()
 
 sentences = []
