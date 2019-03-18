@@ -37,5 +37,11 @@ dimulai dari pemecahan angka menjadi kata, dan untuk simbol sementara diacuhkan 
 sementara belum mengetahui apa plus minus dari `stemming`
 [Sastrawi, Natural Language Processing Mudah Dengan Python](https://belajarpython.com/2018/05/sastrawi-natural-language-processing-bahasa-indonesia.html)
 
+# Embedding
+cari data yang kecil dulu saja, perbaiki pengektrackan datanya, 
+	```
+	mau mendapatkan data angka dan symbol juga, masukkan daam to word list saja.
+	```
+
 # Referency
 [An Introduction to Bag-of-Words in NLP](https://medium.com/greyatom/an-introduction-to-bag-of-words-in-nlp-ac967d43b428)
