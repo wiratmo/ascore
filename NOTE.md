@@ -43,5 +43,10 @@ cari data yang kecil dulu saja, perbaiki pengektrackan datanya,
 	mau mendapatkan data angka dan symbol juga, masukkan daam to word list saja.
 	```
 
+Yan diubah adalah parameter `PAT_ALPHABETIC = re.compile(r'(((?![\d])\w)+)', re.UNICODE)` dalam file *utils* package gensim. 
+**Pertanyaannya** 
+	bagaimana cara menimpa variable dalam thirt vendor. `?`
+
+
 # Referency
 [An Introduction to Bag-of-Words in NLP](https://medium.com/greyatom/an-introduction-to-bag-of-words-in-nlp-ac967d43b428)

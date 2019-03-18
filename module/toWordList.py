@@ -3,7 +3,7 @@ class toWordList(object):
 	import numpy as np
 	import re
 	
-	def separateWords(self, words, changeNumber2Word):
+	def separateWords(self, words, changeNumber2Word=False):
 
 		for word in words:
 			
