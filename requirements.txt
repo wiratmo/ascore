@@ -1,0 +1,5 @@
+pandas
+numpy
+num2words
+gensim
+multiprocessing

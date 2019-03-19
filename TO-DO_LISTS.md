@@ -10,4 +10,4 @@
 - memecah fungsi dalam *toWordList()* ke *toWordList()* dan *importData()*
 
 # 19 maret 2019
-- memperbaiki text embedding
+- membuat model. 
