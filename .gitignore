@@ -1,7 +1,5 @@
-DataQuestionExam_SMP.csv
-DataAnswerExam_SMP.csv
-SimpleData.csv
-model.bin
-idwiki.bz2
-enwiki.bz2
+__pycache__
+*.pyc
+/data
+/screenshoot
 /oldest
