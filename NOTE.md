@@ -44,6 +44,7 @@ cari data yang kecil dulu saja, perbaiki pengektrackan datanya,
 	```
 
 Yan diubah adalah parameter `PAT_ALPHABETIC = re.compile(r'(((?![\d])\w)+)', re.UNICODE)` dalam file *utils* package gensim. 
+
 **Pertanyaannya** 
 	bagaimana cara menimpa variable dalam thirt vendor. `?`
 
