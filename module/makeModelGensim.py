@@ -25,7 +25,9 @@ class makeModelGensim(object):
 		print('Training Word2Vec Model...')
 		sentences = self.gensim.models.word2vec.LineSentence(self.wikiOutput)
 		id_w2v = self.gensim.models.word2vec.Word2Vec(sentences, size=self.numDimension, workers=self.multiprocessing.cpu_count()-1, sg=self.trainingAlgoritm)
-		id_w2v.save(self.modelOutput)
+		
+		# id_w2v.save(self.modelOutput) 
+		id_w2v.vw.save_word2vec_format(self.modelOutput)
 		finish_time = self.time.time()
 
 		print('Finished. Elapsed time: {}'.format(self.timedelta(seconds=finish_time-start_time)))

@@ -37,5 +37,6 @@ if not(os.path.exists(dirData+modelOutput)):
 		steamingWiki(corpusInput=corpusInput, wikiOutput=wikiOutput).execute()
 	makeModelGensim(wikiOutput=wikiOutput, modelOutput=modelOutput, numDimension=numDimension, trainingAlgoritm=trainingAlgoritm).execute()
 
-data = toVectore(essays = trueAnswer, model = gensim.models.word2vec.Word2Vec.load(dirData+modelOutput), numFeature= numDimension).changeToVector()
+# model = gensim.models.word2vec.Word2Vec.load(dirData+modelOutput)
+data = toVectore(essays = trueAnswer, model = gensim.models.KeyedVectors.load_word2vec_format(dirData+modelOutput), numFeature= numDimension).changeToVector()
 # file.write(str(data))
