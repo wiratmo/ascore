@@ -18,4 +18,6 @@
 # 20 maret 2019
 - masuk pada tahap processing saja, peajari LSTM standar dahulu [reverensi](https://github.com/mankadronit/Automated-Essay--Scoring)
 
-
+# 26 maret 2019
+- dicoba lstm dengan hasil average sentence representation.
+- setaeah beraril baru kita ubah menjadi setiap word menjadi input LSTM

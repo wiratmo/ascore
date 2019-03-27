@@ -1,12 +1,15 @@
 class toVectore(object):
-
+	"""
+		Masih perlu diperluas dengan beberapa opsi.
+	"""
 	import numpy as np
 	
-	def __init__(self, essays, model, numFeature):
+	def __init__(self, essays, model, numFeature, average=True):
 		super(toVectore, self).__init__()
 		self.essays = essays
 		self.model = model
 		self.numFeature = numFeature
+		self.average = average
 
 	def makeFeatureVec(self, essay):
 		sentenceVectore = self.np.zeros((self.numFeature,),dtype="float32")
@@ -21,9 +24,10 @@ class toVectore(object):
 
 	def changeToVector(self):
 		counter = 0
-		wordVectore = self.np.zeros((len(self.essays),self.numFeature),dtype="float32")
-		for essay in self.essays:
-			wordVectore[counter] = self.makeFeatureVec(essay)
-			counter = counter + 1
+		if self.average:			
+			wordVectore = self.np.zeros((len(self.essays),self.numFeature),dtype="float32")
+			for essay in self.essays:
+				wordVectore[counter] = self.makeFeatureVec(essay)
+				counter = counter + 1
 		return wordVectore
 		

@@ -2,3 +2,5 @@ pandas
 numpy
 num2words
 gensim
+sklearn
+keras
