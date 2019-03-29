@@ -9,21 +9,22 @@ from module.steamingWiki import steamingWiki
 from module.makeModelGensim import makeModelGensim
 from module.toVectore import toVectore
 from module.modelLSTM import modelLSTM
-from sklearn.cross_validation import KFold
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import cohen_kappa_score
+from sklearn.model_selection import KFold
+from sklearn.metrics import mean_squared_error, mean_absolute_error, cohen_kappa_score
 import pandas as pd
 import numpy as np
 import gensim
 
 wikiSource			= 'idwiki'
 answerData			= 'DataAnswerExam_SMP.csv'
+# answerData			= 'aes.csv'
 questionData		= 'DataQuestionExam_SMP.csv'
+# questionData		= 'qes.csv'
 dirData				= cwd+'/data/'
 corpusInput			= wikiSource+'.bz2'
 wikiOutput			= wikiSource+'.txt'
 fileExtension		= 'bin'
-trainingAlgoritm	= 1
+trainingAlgoritm	= 0
 numDimension		= 200
 modelOutput			= wikiSource+'_word2vec_'+str(numDimension)+'_'+str(trainingAlgoritm)+'.'+fileExtension
 
@@ -41,16 +42,17 @@ else:
 	model = gensim.models.KeyedVectors.load_word2vec_format(dirData+modelOutput, unicode_errors='ignore')
 
 msea =[]
+maea =[]
 kappa = []
 for x in dQuestion.loc[:,'Essay_id'].values:
 	xdAnswer = dAnswer.loc[dAnswer['Essay_id'] == x]
 	xdQuestion = dQuestion.loc[dQuestion['Essay_id'] == x]
-
-	crossVal = KFold(len(xdAnswer), n_folds=5, shuffle=True)
+	crossVal = KFold(n_splits=5, random_state=None, shuffle=True)
 	results = []
 	resultaa = []
+	resultbb = []
 	count = 1
-	for dx, dy in crossVal:
+	for dx, dy in crossVal.split(xdAnswer):
 		trainStudentAnswer = []
 		testStudentAnswer = []
 		trueAnswer = []
@@ -67,35 +69,40 @@ for x in dQuestion.loc[:,'Essay_id'].values:
 		[testStudentAnswer.append(toWordList().sentenceToWordList(a1[0], changeNumber2Word= True)) for a1 in xtest.values]
 		[trueAnswer.append(toWordList().sentenceToWordList(a1[0], changeNumber2Word= True)) for a1 in xdQuestion.loc[:,['Answer']].values]
 
-
-		dataAnswerXTrain = toVectore(essays = trainStudentAnswer, model = model, numFeature= numDimension).changeToVector()
-		dataAnswerXTest = toVectore(essays = testStudentAnswer, model = model, numFeature= numDimension).changeToVector()
-		dataTrueAnswer = toVectore(essays = trueAnswer, model = model, numFeature= numDimension).changeToVector()
-
-		dataAnswerXTrain = np.reshape(dataAnswerXTrain, (dataAnswerXTrain.shape[0], 1, dataAnswerXTrain.shape[1]))
-		dataAnswerXTest = np.reshape(dataAnswerXTest, (dataAnswerXTest.shape[0], 1, dataAnswerXTest.shape[1]))
-		dataTrueAnswer = np.reshape(dataTrueAnswer, (dataTrueAnswer.shape[0], 1, dataTrueAnswer.shape[1]))
-
+		dataAnswerXTrain, dataTrueAnswer = toVectore(essays = trainStudentAnswer, trueAnswer=trueAnswer, model = model, numFeature= numDimension, average=False).changeToVector()
+		dataAnswerXTest = toVectore(essays = testStudentAnswer, model = model, numFeature= numDimension, average=False).changeToVector()
+		
+		# print(dataAnswerXTrain.shape)
+		# print(dataAnswerXTest.shape)
+		# print(dataTrueAnswer.shape)
+		
 		modelNetwork = modelLSTM().getModel()
 
 		print(modelNetwork)
-		modelNetwork.fit(dataAnswerXTrain, ytrain, batch_size=64, epochs=50)
+		modelNetwork.fit(dataAnswerXTrain, ytrain, batch_size=100, epochs=100)
 		ypred = modelNetwork.predict(dataAnswerXTest)
 		modelNetwork.save(dirData+'model/lstm_model_'+str(x)+'.h5')
 		result = mean_squared_error(ytest, np.around(ypred))
-		results.append(result)
-		
 		resulta = cohen_kappa_score(ytest, np.around(ypred), weights='quadratic')
-
-		print("Kappa Score: {}".format(resulta))
+		resultb = mean_absolute_error(ytest, np.around(ypred))
+		results.append(result)
 		resultaa.append(resulta)
-		print(results)
+		resultbb.append(resultb)
+		
+
+		print("MSE :{}".format(results))
+		print("Kappa Score: {}".format(resultaa))
+		print("MAE :{}".format(resultbb))
 
 		count += 1
+
 	print("mse: ",np.around(np.array(results).mean(),decimals=4))
 	print("Average Kappa score after a 5-fold cross validation: ",np.around(np.array(resultaa).mean(),decimals=4))
+	print("mae: ",np.around(np.array(resultbb).mean(),decimals=4))
 	msea.append(np.around(np.array(results).mean(),decimals=4))
 	kappa.append(np.around(np.array(resultaa).mean(),decimals=4))
+	maea.append(np.around(np.array(resultaa).mean(),decimals=4))
 
 print(msea)
 print(kappa)
+print(maea)
