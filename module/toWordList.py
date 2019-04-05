@@ -3,11 +3,13 @@ class toWordList(object):
 	import numpy as np
 	import re
 	
-	def separateWords(self, words, changeNumber2Word=False):
-
+	def separateWords(self, words, changeNumber2Word=False, question=None):
 		for word in words:
-			
 			mergedWord = list()
+
+			if word in question:
+				locWord = words.index(word)
+				words.pop(locWord)
 
 			alphabet = (self.re.sub("[^a-zA-Z]", " ", word)).split()
 			number = (self.re.sub("[^0-9]", " ", word)).split()
@@ -70,8 +72,12 @@ class toWordList(object):
 
 		return words
 
-	def sentenceToWordList(self, sentences, changeNumber2Word = False):
+	def sentenceToWordList(self, sentences, changeNumber2Word = False, question = None):
 
-		essay_v = self.re.sub("[^a-zA-Z0-9/%/*\-=+.,><'():]", " ", sentences)
-		words = essay_v.split()
-		return self.separateWords(words, changeNumber2Word)
+		# essay_v = self.re.sub("[^a-zA-Z0-9/%/*\-=+.,><'():]", " ", sentences)
+		essay_v = self.re.sub("[^a-zA-Z0-9]", " ", sentences)
+		words = essay_v.lower().split()
+		if question is not None:
+			question_v = self.re.sub("[^a-zA-Z0-9]", " ", question)
+			question = question_v.lower().split()
+		return self.separateWords(words, changeNumber2Word, question)

@@ -4,13 +4,15 @@ class toVectore(object):
 	"""
 	import numpy as np
 	
-	def __init__(self, essays, model, numFeature, average=True, trueAnswer=None):
+	def __init__(self, essays, model, numFeature, average=True, trueAnswer=None, distance=False, question=None):
 		super(toVectore, self).__init__()
 		self.essays = essays
 		self.model = model
 		self.numFeature = numFeature
 		self.average = average
 		self.trueAnswer = trueAnswer
+		self.distance = distance
+		self.question = question
 
 	def makeFeatureVec(self, essay):
 		sentenceVectore = self.np.zeros((self.numFeature,),dtype="float32")
@@ -29,11 +31,12 @@ class toVectore(object):
 		for essay in self.essays:
 			wordVectore[counter] = self.makeFeatureVec(essay)
 			counter = counter + 1
-		wordVectore = self.np.reshape(wordVectore, (wordVectore.shape[0], 1, wordVectore.shape[1]))
+		wordVectore = self.np.reshape(wordVectore, (1, wordVectore.shape[0], wordVectore.shape[1]))
 		return wordVectore
 
 	def makeSentenceVectore(self, essay, nEssay):
 		sentenceVectore = self.np.zeros((nEssay, self.numFeature),dtype="float32")
+		
 		num_words = 0
 		index2word_set = set(self.model.wv.index2word)
 		for word in essay:
@@ -45,10 +48,12 @@ class toVectore(object):
 
 	def sentenceVectores(self):
 		nEssay = []
+
 		[(nEssay.append(len(essay))) for essay in self.essays]
+		[(nEssay.append(len(essay))) for essay in self.trueAnswer]
+
 		senteceVectore = self.np.zeros((len(self.essays), max(nEssay), self.numFeature), dtype="float32")
 		
-		# print("ini essay venctore kosong"+str(senteceVectore.shape))
 		counter = 0
 		for essay in self.essays:
 			senteceVectore[counter] = self.makeSentenceVectore(essay, max(nEssay))
@@ -61,12 +66,20 @@ class toVectore(object):
 				trueAnswer[countera] = self.makeSentenceVectore(ta, max(nEssay))
 				countera += 1
 
-		# print("ini essay venctore isi"+str(senteceVectore.shape))
-		self.np.reshape(senteceVectore, (senteceVectore.shape[1], senteceVectore.shape[0], senteceVectore.shape[2]))
 		if self.trueAnswer is not None:
-			self.np.reshape(trueAnswer, (trueAnswer.shape[1], trueAnswer.shape[0], trueAnswer.shape[2]))
+			if self.distance:
+				distanceVectore = self.np.zeros((len(self.essays), max(nEssay), self.numFeature), dtype="float32")
+				for x in range(len(senteceVectore)):
+					distanceVectore[x] = senteceVectore[x] - trueAnswer[0]
+				self.np.reshape(senteceVectore, (senteceVectore.shape[0], senteceVectore.shape[1], senteceVectore.shape[2]))
+				self.np.reshape(distanceVectore, (distanceVectore.shape[0], distanceVectore.shape[1], distanceVectore.shape[2]))
+				return senteceVectore, distanceVectore
+
+			self.np.reshape(senteceVectore, (senteceVectore.shape[0], senteceVectore.shape[1], senteceVectore.shape[2]))
+			self.np.reshape(trueAnswer, (trueAnswer.shape[0], trueAnswer.shape[1], trueAnswer.shape[2]))
 			return senteceVectore, trueAnswer
 		else:
+			self.np.reshape(senteceVectore, (senteceVectore.shape[0], senteceVectore.shape[1], senteceVectore.shape[2]))
 			return senteceVectore
 
 		

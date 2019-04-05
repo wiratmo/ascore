@@ -51,3 +51,24 @@ Yan diubah adalah parameter `PAT_ALPHABETIC = re.compile(r'(((?![\d])\w)+)', re.
 
 # Referency
 [An Introduction to Bag-of-Words in NLP](https://medium.com/greyatom/an-introduction-to-bag-of-words-in-nlp-ac967d43b428)
+
+```
+(soal)y\x(nilai)
+	1	2	3	4	5
+1	0	1	8	5	121
+2	0	49	7	1	78
+3	0	7	3	1	124
+4	0	1	2	13	119
+5	0	80	9	2	44
+```
+
+```
+(soal)y\x(persentase)
+	1	2	3	4	5	100%
+1	0 	1 	6 	4 	90 	100%
+2	0 	36 	5 	1 	58 	100% 
+3	0 	5 	2 	1 	92 	100%
+4	0 	1 	1 	10 	88 	100%
+5	0 	59 	7 	1 	33 	100%
+
+```
