@@ -7,4 +7,4 @@ __pycache__
 *.pdf
 dump.txt
 train*.py
-/.ipynb_checkpoints
+.ipynb_checkpoints/
