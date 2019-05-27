@@ -72,3 +72,7 @@ Yan diubah adalah parameter `PAT_ALPHABETIC = re.compile(r'(((?![\d])\w)+)', re.
 5	0 	59 	7 	1 	33 	100%
 
 ```
+
+Seven of them are character based –Longest Common SubString, Damerau, Jaro, Jaro Winkler, Needleman Wunch, Simth Waterman and N-gram - while the other are term-based distance measures – Block Distance, Cosine Similarity, Dice’s Coefficient, Eclidean Distance, Jaccard Similarity, Levenshtein distance, Holistic Model, Sim Metrics
+
+kemungkinan masalah ada di waktu pemberian nilai yang meetapkan kekurangan nilai degan menggunakan nilai 0 pada akhir rencana solusi berada pada perubahann peletaan penambahan nilai ke depan

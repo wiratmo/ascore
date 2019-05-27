@@ -24,7 +24,7 @@ class changeNum2WordandFilter(object):
 					locWord = altText.index(text)
 
 					num = int(number[-1])
-					toSingleWord = (str(num2words(num, lang='id'))).split()
+					toSingleWord = (str(num2words(num, lang='en'))).split()
 
 					a = locWord
 

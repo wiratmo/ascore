@@ -73,5 +73,5 @@ class toWordList(object):
 		# essay_v = self.re.sub("[^a-zA-Z0-9/%/*\-=+.,><'():]", " ", sentences)
 		essay_v = self.re.sub("[^a-zA-Z0-9]", " ", sentences)
 		words = essay_v.split()
-		
-		return self.separateWords(words, changeNumber2Word)
+		print(words)
+		return words

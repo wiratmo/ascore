@@ -2,7 +2,7 @@ __pycache__
 *.pyc
 /data
 /screenshoot
-/oldest
+/old
 /journal
 *.pdf
 dump.txt
