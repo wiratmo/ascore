@@ -8,3 +8,4 @@ __pycache__
 dump.txt
 train*.py
 .ipynb_checkpoints/
+*.txt
