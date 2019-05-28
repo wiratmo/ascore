@@ -9,3 +9,4 @@ dump.txt
 train*.py
 .ipynb_checkpoints/
 *.txt
+/referencies
