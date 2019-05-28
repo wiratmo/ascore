@@ -76,3 +76,36 @@ Yan diubah adalah parameter `PAT_ALPHABETIC = re.compile(r'(((?![\d])\w)+)', re.
 Seven of them are character based –Longest Common SubString, Damerau, Jaro, Jaro Winkler, Needleman Wunch, Simth Waterman and N-gram - while the other are term-based distance measures – Block Distance, Cosine Similarity, Dice’s Coefficient, Eclidean Distance, Jaccard Similarity, Levenshtein distance, Holistic Model, Sim Metrics
 
 kemungkinan masalah ada di waktu pemberian nilai yang meetapkan kekurangan nilai degan menggunakan nilai 0 pada akhir rencana solusi berada pada perubahann peletaan penambahan nilai ke depan
+
+# Model
+Model 0
+![alt text](https://github.com/wiratmo/ascore/blob/master/note/pic/sk0.png)
+
+Model 1
+![alt text](https://github.com/wiratmo/ascore/blob/master/note/pic/sk1.png)
+
+Model 2
+![alt text](https://github.com/wiratmo/ascore/blob/master/note/pic/sk2.png)
+
+Model 3
+![alt text](https://github.com/wiratmo/ascore/blob/master/note/pic/sk3.png)
+
+
+# Skenario
+
+	* [0. concatenate](##concatenate)
+	* [1. substract](##substract)
+	* [2. cosine](##cosine)
+	* [3. multiplay](##multiplay)
+	* [4. equlidiencecosine](##equlidiencecosine)
+
+## concatenate
+hasilnya masuk ke label 5 terus diprediksi karena umbalence class. setelah dilakukan undersampling dapat kan hasil yang limayan lebih bagus
+## substract
+hasil yang didapatan bisa digunakan
+## cosine
+hasilnya masuk ke label 5 terus diprediksi karena umbalence class. setelah dilakukan undersampling dapat kan hasil yang limayan lebih bagus
+## multiplay
+hasilnya masuk ke label 5 terus diprediksi karena umbalence class. setelah dilakukan undersampling dapat kan hasil yang limayan lebih bagus
+## equlidiencecosine
+hasil yang didapatan bisa digunakan
