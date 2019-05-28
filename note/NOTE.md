@@ -93,19 +93,19 @@ Model 3
 
 # Skenario
 * skenario
-	* [0. concatenate](##concatenate)
-	* [1. substract](##substract)
-	* [2. cosine](##cosine)
-	* [3. multiplay](##multiplay)
-	* [4. equlidiencecosine](##equlidiencecosine)
+	* [0. concatenate](#concatenate)
+	* [1. substract](#substract)
+	* [2. cosine](#cosine)
+	* [3. multiplay](#multiplay)
+	* [4. equlidiencecosine](#equlidiencecosine)
 
-## concatenate
+# concatenate
 hasilnya masuk ke label 5 terus diprediksi karena umbalence class. setelah dilakukan undersampling dapat kan hasil yang limayan lebih bagus
-## substract
+# substract
 hasil yang didapatan bisa digunakan
-## cosine
+# cosine
 hasilnya masuk ke label 5 terus diprediksi karena umbalence class. setelah dilakukan undersampling dapat kan hasil yang limayan lebih bagus
-## multiplay
+# multiplay
 hasilnya masuk ke label 5 terus diprediksi karena umbalence class. setelah dilakukan undersampling dapat kan hasil yang limayan lebih bagus
-## equlidiencecosine
+# equlidiencecosine
 hasil yang didapatan bisa digunakan
