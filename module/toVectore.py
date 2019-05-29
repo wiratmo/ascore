@@ -55,7 +55,7 @@ class toVectore(object):
 		return sentenceVectore
 
 	def sentenceVectores(self):
-		nEssay = 200
+		nEssay = 180
 
 		senteceVectore = self.np.zeros((len(self.essays), nEssay, self.numFeature), dtype="float32")
 		
